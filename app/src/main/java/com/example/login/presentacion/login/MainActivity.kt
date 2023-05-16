@@ -1,50 +1,56 @@
 package com.example.login.presentacion.login
 
-import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
-import androidx.activity.viewModels
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
-import androidx.navigation.findNavController
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import com.example.login.R
+import androidx.navigation.fragment.findNavController
 import com.example.login.databinding.ActivityMainBinding
 import com.example.login.firebase.util.Resource
-import com.example.login.presentacion.home.MainMenu
-import com.example.login.presentacion.signup.ActivityCreateAccount
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
+class MainActivity :Fragment(){
 
-    private lateinit var binding: ActivityMainBinding
+    private  var _binding: ActivityMainBinding? = null
+    private val binding get() = _binding!!
     private val viewModel: LoginViewModel by viewModels()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-
-        binding.btnRegistro.setOnClickListener { initListener() }
-        binding.btnLogin.setOnClickListener { handleLogin() }
-        initObservers()
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        // Inflate the layout for this fragment
+        _binding = ActivityMainBinding.inflate(inflater,container,false)
+        return binding.root
 
     }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        initObservers()
+        initListener()
+    }
+
     private fun initObservers() {
-        viewModel.loginState.observe(this, Observer  { state ->
+        viewModel.loginState.observe(viewLifecycleOwner) { state ->
             when(state) {
                 is Resource.Succes -> {
                     handleLoading(isLoading = false)
-                   initListener2()
+                    findNavController().navigate(R.id.action_mainActivity_to_mainMenu)
+
 
 
                 }
                 is Resource.Error -> {
                     handleLoading(isLoading = false)
                     Toast.makeText(
-                        this,
+                        requireContext(),
                         state.message,
                         Toast.LENGTH_SHORT
                     ).show()
@@ -52,19 +58,15 @@ class MainActivity : AppCompatActivity() {
                 is Resource.Loading -> handleLoading(isLoading = true)
                 else -> Unit
             }
-        })
+        }
     }
 
-    private fun initListener2(){
-        val intent = Intent(this,MainMenu::class.java)
 
-        startActivity(intent)
-
-    }
 private fun initListener(){
-    val intent = Intent(this,ActivityCreateAccount::class.java)
-
-    startActivity(intent)
+    with(binding) {
+        btnLogin.setOnClickListener { handleLogin() }
+        btnRegistro.setOnClickListener { findNavController().navigate(R.id.action_mainActivity_to_activityCreateAccount) }
+    }
 
 
 }
@@ -98,6 +100,9 @@ private fun initListener(){
 
     }
 
-
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 
 }

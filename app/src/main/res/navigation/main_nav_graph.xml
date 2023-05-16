@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_nav_graph"
+    app:startDestination="@id/mainActivity">
+
+    <fragment
+        android:id="@+id/mainActivity"
+        android:name="com.example.login.presentacion.login.MainActivity"
+        android:label="activity_main"
+        tools:layout="@layout/activity_main" >
+        <action
+            android:id="@+id/action_mainActivity_to_activityCreateAccount"
+            app:destination="@id/activityCreateAccount" />
+        <action
+            android:id="@+id/action_mainActivity_to_mainMenu"
+            app:destination="@id/mainMenu" />
+    </fragment>
+    <fragment
+        android:id="@+id/activityCreateAccount"
+        android:name="com.example.login.presentacion.signup.ActivityCreateAccount"
+        android:label="activity_create_account"
+        tools:layout="@layout/activity_create_account" />
+    <fragment
+        android:id="@+id/mainMenu"
+        android:name="com.example.login.presentacion.home.MainMenu"
+        android:label="activity_main_menu"
+        tools:layout="@layout/activity_main_menu" />
+</navigation>

@@ -1,51 +1,51 @@
 package com.example.login.presentacion.signup
 
-import android.content.Context
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.AttributeSet
-import android.view.MotionEvent
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
-import androidx.activity.viewModels
-import androidx.core.content.ContentProviderCompat.requireContext
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewTreeLifecycleOwner
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import com.example.login.R
 import com.example.login.databinding.ActivityCreateAccountBinding
 import com.example.login.firebase.util.Resource
-import com.example.login.presentacion.login.MainActivity
-
-
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ActivityCreateAccount : AppCompatActivity() {
-    private lateinit var binding: ActivityCreateAccountBinding
+class ActivityCreateAccount : Fragment() {
+    private  var _binding: ActivityCreateAccountBinding? = null
+    private val binding get() = _binding!!
+
 
     private val viewModel: SignUpViewModel by viewModels()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivityCreateAccountBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        // Inflate the layout for this fragment
+        _binding = ActivityCreateAccountBinding.inflate(inflater,container,false)
+        return binding.root
 
-        binding.imageVolver.setOnClickListener { onBackPressed() }
-        initListener()
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
         initObservers()
-
-
+        initListener()
     }
 
 
     private fun initObservers() {
-        viewModel.sigUpState.observe(this, Observer  { state ->
+        viewModel.sigUpState.observe(viewLifecycleOwner) { state ->
             when(state) {
                 is Resource.Succes -> {
                     handleLoading(isLoading = false)
-                    onBackPressed()
+                       activity?.onBackPressed()
                     Toast.makeText(
-                        this,
+                        requireContext(),
                         "Sign up success",
                         Toast.LENGTH_SHORT
                     ).show()
@@ -53,7 +53,7 @@ class ActivityCreateAccount : AppCompatActivity() {
                 is Resource.Error -> {
                     handleLoading(isLoading = false)
                     Toast.makeText(
-                        this,
+                        requireContext(),
                         state.message,
                         Toast.LENGTH_SHORT
                     ).show()
@@ -61,7 +61,7 @@ class ActivityCreateAccount : AppCompatActivity() {
                 is Resource.Loading -> handleLoading(isLoading = true)
                 else -> Unit
             }
-        })
+        }
     }
 
 
@@ -69,11 +69,16 @@ class ActivityCreateAccount : AppCompatActivity() {
 
     private fun initListener() {
 
-            binding.btnCrear.setOnClickListener {
+        with(binding) {
+            btnCrear.setOnClickListener {
                 handleSignUp()
             }
 
-}
+
+        }
+
+    }
+
 
 
         private fun handleSignUp() {
@@ -101,6 +106,9 @@ class ActivityCreateAccount : AppCompatActivity() {
         }
 
     }
-
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 
 }
