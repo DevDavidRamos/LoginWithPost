@@ -40,7 +40,8 @@
         android:layout_marginTop="60dp"
         android:hint="Correo Electronico"
         android:textColorHint="@color/black"
-
+        app:boxStrokeColor="@color/black"
+        app:boxStrokeWidth="4dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView">
@@ -62,6 +63,8 @@
         android:layout_marginTop="36dp"
         android:hint="Contraseña"
         android:textColorHint="@color/black"
+        app:boxStrokeColor="@color/black"
+        app:boxStrokeWidth="4dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tilEmail"

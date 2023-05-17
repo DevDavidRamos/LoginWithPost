@@ -18,6 +18,8 @@
         android:layout_marginTop="12dp"
         android:hint="Correo Electronico"
         android:textColorHint="@color/black"
+        app:boxStrokeColor="@color/black"
+        app:boxStrokeWidth="4dp"
         app:layout_constraintBottom_toBottomOf="@id/tilPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -88,6 +90,8 @@
         android:layout_marginTop="12dp"
         android:hint="Contraseña"
         android:textColorHint="@color/black"
+        app:boxStrokeColor="@color/black"
+        app:boxStrokeWidth="4dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tilEmail"
@@ -96,6 +100,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/txtPassword"
             android:textColor="@color/black"
+            android:outlineAmbientShadowColor=""
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textPassword" />
