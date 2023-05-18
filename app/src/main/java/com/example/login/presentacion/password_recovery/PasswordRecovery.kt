@@ -1,5 +1,6 @@
-package com.example.login.presentacion.signup
+package com.example.login.presentacion.password_recovery
 
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -7,25 +8,27 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.example.login.R
 import com.example.login.databinding.ActivityCreateAccountBinding
+import com.example.login.databinding.ActivityPasswordRecoveryBinding
 import com.example.login.firebase.util.Resource
+import com.example.login.presentacion.login.MainActivityDirections
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ActivityCreateAccount : Fragment() {
-    private  var _binding: ActivityCreateAccountBinding? = null
+class PasswordRecovery : Fragment() {
+    private var _binding: ActivityPasswordRecoveryBinding? = null
     private val binding get() = _binding!!
 
-
-    private val viewModel: SignUpViewModel by viewModels()
+    private val viewModel: PasswordRecoveryViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         // Inflate the layout for this fragment
-        _binding = ActivityCreateAccountBinding.inflate(inflater,container,false)
+        _binding = ActivityPasswordRecoveryBinding.inflate(inflater,container,false)
         return binding.root
 
     }
@@ -34,19 +37,18 @@ class ActivityCreateAccount : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initObservers()
-        initListener()
+        initListeners()
     }
 
-
     private fun initObservers() {
-        viewModel.sigUpState.observe(viewLifecycleOwner) { state ->
+        viewModel.passwordSent.observe(viewLifecycleOwner) { state ->
             when(state) {
                 is Resource.Succes -> {
                     handleLoading(isLoading = false)
-                       activity?.onBackPressed()
+                    activity?.onBackPressed()
                     Toast.makeText(
                         requireContext(),
-                        "Sign up success",
+                        "Hemos enviado un link para reestablecer tu contraseña",
                         Toast.LENGTH_SHORT
                     ).show()
                 }
@@ -64,51 +66,37 @@ class ActivityCreateAccount : Fragment() {
         }
     }
 
-
-
-
-    private fun initListener() {
-
+    private fun initListeners() {
         with(binding) {
-            btnCrear.setOnClickListener {
-                handleSignUp()
-            }
             imageVolver.setOnClickListener {
                 activity?.onBackPressed()
             }
-
-
-        }
-
-    }
-
-
-
-        private fun handleSignUp() {
-
-
-            val email = binding.txtEmail.text.toString()
-            val password = binding.txtPassword.text.toString()
-
-            viewModel.signUp(email, password)
-
-        }
-    private fun handleLoading(isLoading: Boolean){
-
-        with(binding){
-            if (isLoading){
-                btnCrear.text = ""
-                btnCrear.isEnabled = false
-                pbSignUp.visibility = View.VISIBLE
-            }else{
-                pbSignUp.visibility = View.GONE
-                btnCrear.text = getString(R.string.login__signup_button)
-                btnCrear.isEnabled = true
-
+            bRecoverPassword.setOnClickListener {
+                handlePasswordRecovery()
             }
         }
-
     }
+
+    private fun handlePasswordRecovery() {
+        val email = binding.etEmail.text.toString()
+
+        viewModel.sendPasswordLink(email)
+    }
+
+    private fun handleLoading(isLoading: Boolean) {
+        with(binding) {
+            if (isLoading) {
+                bRecoverPassword.text = ""
+                bRecoverPassword.isEnabled = false
+                pbRecoverPassword.visibility = View.VISIBLE
+            } else {
+                pbRecoverPassword.visibility = View.GONE
+                bRecoverPassword.text = getString(R.string.login__password_recovery_button)
+                bRecoverPassword.isEnabled = true
+            }
+        }
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

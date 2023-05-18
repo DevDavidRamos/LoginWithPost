@@ -10,31 +10,35 @@ import javax.inject.Inject
 class FirebaseAuthRepositoryImpl @Inject constructor(
   private val firebaseAuth: FirebaseAuth
 ):AuthRepository {
-    override suspend fun login(email: String, password: String): Boolean{
+    override suspend fun login(email: String, password: String): String {
         return try {
-            var isSuccesful :Boolean = false
+            var useUID = ""
             firebaseAuth.signInWithEmailAndPassword(email, password)
-                .addOnSuccessListener { isSuccesful = true }
-                .addOnFailureListener{ isSuccesful = false }
+                .addOnSuccessListener {
+                    useUID =  it.user?.uid ?: ""
+                }
                 .await()
-            isSuccesful
+            useUID
         }catch (e: Exception){
-            false
+            ""
 
         }
     }
 
-    override suspend fun signUp(email: String, password: String): Boolean {
+    override suspend fun signUp(email: String, password: String): String {
         return try {
-            var isSuccesful :Boolean = false
+            var useUID = ""
             firebaseAuth.createUserWithEmailAndPassword(email,password)
-                .addOnCompleteListener {isSuccesful = it.isSuccessful }
-                    .await()
-            return isSuccesful
+                .addOnSuccessListener {
+                  useUID =  it.user?.uid ?: ""
+                }
+                .await()
+            useUID
+
 
 
         }catch (e: Exception){
-            false
+            ""
         }
     }
 

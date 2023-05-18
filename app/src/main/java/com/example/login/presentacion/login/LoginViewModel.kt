@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.login.firebase.domain.model.User
 import com.example.login.firebase.domain.usecase.FirebaseLoginUseCase
 import com.example.login.firebase.domain.usecase.FirebaseSignUpUseCase
 import com.example.login.firebase.util.Resource
@@ -19,8 +20,8 @@ class LoginViewModel @Inject constructor(
     private val loginUseCase: FirebaseLoginUseCase
 ) :ViewModel() {
 
-    private val _loginState: MutableLiveData<Resource<Boolean>> = MutableLiveData()
-    val loginState: LiveData<Resource<Boolean>>
+    private val _loginState: MutableLiveData<Resource<User>> = MutableLiveData()
+    val loginState: LiveData<Resource<User>>
         get() = _loginState
 
 

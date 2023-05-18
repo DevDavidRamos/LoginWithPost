@@ -2,4 +2,6 @@
     <string name="app_name">Login</string>
     <string name="login__signup_button">Registrarme</string>
     <string name="login_button">Iniciar Sesion</string>
+    <string name="login__password_recovery_button">Recuperar contraseña</string>
+    
 </resources>

@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_mainActivity_to_mainMenu"
             app:destination="@id/mainMenu" />
+        <action
+            android:id="@+id/action_mainActivity_to_passwordRecovery"
+            app:destination="@id/passwordRecovery" />
     </fragment>
     <fragment
         android:id="@+id/activityCreateAccount"
@@ -26,5 +29,17 @@
         android:id="@+id/mainMenu"
         android:name="com.example.login.presentacion.home.MainMenu"
         android:label="activity_main_menu"
-        tools:layout="@layout/activity_main_menu" />
+        tools:layout="@layout/activity_main_menu">
+
+    <argument
+        android:name="uid"
+        app:nullable="false"
+        app:argType="string"/>
+
+    </fragment>
+    <fragment
+        android:id="@+id/passwordRecovery"
+        android:name="com.example.login.presentacion.password_recovery.PasswordRecovery"
+        android:label="activity_password_recovery"
+        tools:layout="@layout/activity_password_recovery" />
 </navigation>

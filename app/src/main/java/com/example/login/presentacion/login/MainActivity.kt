@@ -42,8 +42,8 @@ class MainActivity :Fragment(){
             when(state) {
                 is Resource.Succes -> {
                     handleLoading(isLoading = false)
-                    findNavController().navigate(R.id.action_mainActivity_to_mainMenu)
-
+                    val action = MainActivityDirections.actionMainActivityToMainMenu(uid = state.data.uid)
+                    findNavController().navigate(action)
 
 
                 }
@@ -66,6 +66,7 @@ private fun initListener(){
     with(binding) {
         btnLogin.setOnClickListener { handleLogin() }
         btnRegistro.setOnClickListener { findNavController().navigate(R.id.action_mainActivity_to_activityCreateAccount) }
+        PasswordRecovery.setOnClickListener { findNavController().navigate(R.id.action_mainActivity_to_passwordRecovery) }
     }
 
 
