@@ -25,7 +25,7 @@ class FirestoreUserRepositoryImpl @Inject constructor(
 
        }
     }
-    override suspend fun getUser(uid:String): User{
+    override suspend fun getUser(uid:String, nombre:String, apellido: String): User{
 
         return try {
             var loggedUser = User()

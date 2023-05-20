@@ -18,7 +18,7 @@ class FirebaseLoginUseCase @Inject constructor(
         val userUID = authRepository.login(email,password)
         if (userUID.isNotEmpty()) {
 
-            val user = userRepository.getUser(uid = userUID)
+            val user = userRepository.getUser(uid = userUID, nombre = "", apellido = "")
 
             emit(Resource.Succes(user))
             emit(Resource.Finished)

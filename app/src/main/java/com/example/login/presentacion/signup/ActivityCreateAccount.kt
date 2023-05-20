@@ -86,11 +86,12 @@ class ActivityCreateAccount : Fragment() {
 
         private fun handleSignUp() {
 
-
+            val nombre = binding.txtNombre.text.toString()
+            val apellido = binding.txtApellido.text.toString()
             val email = binding.txtEmail.text.toString()
             val password = binding.txtPassword.text.toString()
 
-            viewModel.signUp(email, password)
+            viewModel.signUp(nombre,apellido,email, password)
 
         }
     private fun handleLoading(isLoading: Boolean){

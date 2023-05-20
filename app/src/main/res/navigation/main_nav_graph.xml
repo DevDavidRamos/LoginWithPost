@@ -35,8 +35,17 @@
         android:name="uid"
         app:nullable="false"
         app:argType="string"/>
+        <argument
+        android:name="nombre"
+        app:nullable="false"
+        app:argType="string"/>
+        <argument
+            android:name="apellido"
+            app:nullable="false"
+            app:argType="string"/>
 
     </fragment>
+
     <fragment
         android:id="@+id/passwordRecovery"
         android:name="com.example.login.presentacion.password_recovery.PasswordRecovery"

@@ -42,7 +42,7 @@ class MainActivity :Fragment(){
             when(state) {
                 is Resource.Succes -> {
                     handleLoading(isLoading = false)
-                    val action = MainActivityDirections.actionMainActivityToMainMenu(uid = state.data.uid)
+                    val action = MainActivityDirections.actionMainActivityToMainMenu(uid = state.data.uid, state.data.nombre, state.data.apellido)
                     findNavController().navigate(action)
 
 

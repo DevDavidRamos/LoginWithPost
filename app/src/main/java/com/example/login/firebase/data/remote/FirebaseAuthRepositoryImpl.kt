@@ -25,10 +25,10 @@ class FirebaseAuthRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun signUp(email: String, password: String): String {
+    override suspend fun signUp(nombre: String, apellido: String,email: String, password: String): String {
         return try {
             var useUID = ""
-            firebaseAuth.createUserWithEmailAndPassword(email,password)
+            firebaseAuth.createUserWithEmailAndPassword(email, password)
                 .addOnSuccessListener {
                   useUID =  it.user?.uid ?: ""
                 }

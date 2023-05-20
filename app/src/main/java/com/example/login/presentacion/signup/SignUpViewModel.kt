@@ -23,9 +23,9 @@ class SignUpViewModel @Inject constructor(
     get() = _signUpState
 
 
-    fun signUp(email: String, password: String){
+    fun signUp(nombre: String, apellido: String,email: String, password: String){
         viewModelScope.launch {
-           signUpUseCase(email, password).onEach { state ->
+           signUpUseCase(nombre,apellido,email, password).onEach { state ->
                _signUpState.value = state
            }.launchIn(viewModelScope)
         }

@@ -30,7 +30,7 @@ class MainMenu : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
 
-        binding.textView2.text = "${args.uid}"
+        binding.textView2.text = " Bienvenido/a: ${args.nombre}  ${args.apellido} "
     }
 
     override fun onDestroyView() {
