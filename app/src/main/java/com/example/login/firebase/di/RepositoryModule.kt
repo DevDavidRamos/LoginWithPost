@@ -1,8 +1,10 @@
 package com.example.login.firebase.di
 
 import com.example.login.firebase.data.remote.FirebaseAuthRepositoryImpl
+import com.example.login.firebase.data.remote.FirestorePostRepositoryImpl
 import com.example.login.firebase.data.remote.FirestoreUserRepositoryImpl
 import com.example.login.firebase.domain.repository.AuthRepository
+import com.example.login.firebase.domain.repository.PostRepository
 import com.example.login.firebase.domain.repository.UserRepository
 import dagger.Binds
 import dagger.Module
@@ -14,10 +16,15 @@ import dagger.hilt.components.SingletonComponent
 abstract class RepositoryModule {
 
     @Binds
+    abstract fun bindPostRepository(postRepository: FirestorePostRepositoryImpl): PostRepository
+
+    @Binds
     abstract fun bindAuthRepository(authRepository: FirebaseAuthRepositoryImpl): AuthRepository
 
 
    @Binds
    abstract fun bindUserRepository(userRepository: FirestoreUserRepositoryImpl): UserRepository
+
+
 
 }
