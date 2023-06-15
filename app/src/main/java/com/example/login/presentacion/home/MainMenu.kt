@@ -10,10 +10,13 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.login.databinding.ActivityMainMenuBinding
 import com.example.login.firebase.domain.model.Post
 import com.example.login.firebase.util.Resource
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.*
 
 
 @AndroidEntryPoint
@@ -88,7 +91,7 @@ class MainMenu : Fragment() {
     }
     private fun initListeners() {
         with(binding) {
-            btnPublicar.setOnClickListener { showAddPostDialog() }
+            btnAddPost.setOnClickListener { showAddPostDialog() }
             postListAdapter.setPostClickListener { showDeletePostDialog(it) }
 
         }
@@ -100,7 +103,10 @@ class MainMenu : Fragment() {
         addPostDialog.setOnAddPostClickListener {
             viewModel.savePost(Post(
                 post = it,
-                userName = args.uid
+                userName = " ${args.nombre}  ${args.apellido} ",
+                date = Date()
+
+
             ))
         }
         addPostDialog.show(parentFragmentManager, "add_note_dialog")

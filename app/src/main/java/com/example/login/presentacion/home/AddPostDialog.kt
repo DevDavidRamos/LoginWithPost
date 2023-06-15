@@ -7,21 +7,23 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.fragment.app.DialogFragment
-import com.example.login.databinding.ActivityMainMenuBinding
-
-class AddPostDialog(): DialogFragment() {
+import com.example.login.databinding.DialogAddPostBinding
 
 
-    private lateinit var binding : ActivityMainMenuBinding
+class AddPostDialog(
+
+): DialogFragment() {
+
+    private lateinit var binding : DialogAddPostBinding
     private var onSubmitClickListener: ((String) -> Unit)? = null
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        binding = ActivityMainMenuBinding.inflate(LayoutInflater.from(context))
+        binding =  DialogAddPostBinding.inflate(LayoutInflater.from(context))
 
         val builder = AlertDialog.Builder(requireActivity())
         builder.setView(binding.root)
 
-        binding.btnPublicar.setOnClickListener {
+        binding.btnPublicar .setOnClickListener {
             onSubmitClickListener?.invoke(binding.txtPost.text.toString())
             dismiss()
         }
