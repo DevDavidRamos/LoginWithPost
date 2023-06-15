@@ -61,7 +61,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0"
                 app:layout_constraintStart_toStartOf="parent"
-                tools:itemCount="20"
+                tools:itemCount="30"
                 tools:listitem="@layout/itemcard_post" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
